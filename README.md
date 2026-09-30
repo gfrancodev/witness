@@ -152,7 +152,7 @@ Lightpanda stays off until you accept it. One `lightpanda serve` is one browser,
 
 ## Install
 
-The plugin is this repository. Version `0.1.0` is in [`VERSION`](VERSION). License: [MIT](LICENSE). Privacy: [PRIVACY.md](PRIVACY.md).
+The plugin is this repository. Version `0.1.0` is in [`VERSION`](VERSION). License: [MIT](LICENSE). Privacy: [PRIVACY.md](PRIVACY.md). Contributing: [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ### Cursor
 
