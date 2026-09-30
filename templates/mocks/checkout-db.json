@@ -1,0 +1,11 @@
+{
+  "$schema": "./node_modules/json-server/schema.json",
+  "payments": [
+    {
+      "id": "1",
+      "orderId": "ord-1001",
+      "status": "confirmed",
+      "message": "Pedido confirmado"
+    }
+  ]
+}

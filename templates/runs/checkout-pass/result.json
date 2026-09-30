@@ -1,0 +1,13 @@
+{
+  "runId": "example-checkout-pass",
+  "flowId": "checkout",
+  "surface": "desktop",
+  "status": "pass",
+  "steps": [
+    {
+      "intent": "confirm_payment",
+      "status": "pass",
+      "evidence": "- heading \"Pedido confirmado\" [level=1]\n- text \"Obrigado pela sua compra\""
+    }
+  ]
+}

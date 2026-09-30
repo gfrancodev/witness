@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "witness.run.media-manifest",
+  "type": "object",
+  "required": ["runId", "artifacts"],
+  "properties": {
+    "runId": { "type": "string" },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "path"],
+        "properties": {
+          "id": { "type": "string" },
+          "kind": { "enum": ["screenshot", "frame", "vision-attachment", "os-screenshot"] },
+          "path": { "type": "string" },
+          "source": { "type": "string" },
+          "timeSeconds": { "type": "number" },
+          "width": { "type": "integer" },
+          "height": { "type": "integer" },
+          "sha256": { "type": "string" },
+          "intent": { "type": "string" }
+        }
+      }
+    }
+  }
+}

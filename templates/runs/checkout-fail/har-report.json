@@ -1,0 +1,18 @@
+{
+  "runId": "checkout-fail",
+  "flowId": "checkout",
+  "kind": "har",
+  "source": "network-requests",
+  "tracePath": ".witness/runs/checkout-fail/trace.zip",
+  "entries": [
+    {
+      "stepIntent": "confirm_payment",
+      "method": "POST",
+      "path": "/api/checkout/pay",
+      "status": 500,
+      "durationMs": 312,
+      "oracleExpectedStatus": 201,
+      "match": "mismatch"
+    }
+  ]
+}

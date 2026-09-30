@@ -1,0 +1,14 @@
+{
+  "name": "witness",
+  "owner": {
+    "name": "Gustavo Franco",
+    "email": "contact@gfrancodev.com"
+  },
+  "description": "Witness QA plugin. See it. Test it. Prove it.",
+  "plugins": [
+    {
+      "name": "witness",
+      "source": "./"
+    }
+  ]
+}

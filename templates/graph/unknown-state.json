@@ -1,0 +1,18 @@
+{
+  "recordedAt": "2026-09-25T18:00:00Z",
+  "url": "http://localhost:4200/checkout/review",
+  "expectedPageId": "payment",
+  "headings": ["Revisar pedido", "Resumo"],
+  "lastAction": {
+    "intent": "confirm_payment",
+    "surface": "desktop"
+  },
+  "console": [
+    { "level": "warning", "text": "Hydration mismatch on checkout summary" }
+  ],
+  "network": [
+    { "method": "GET", "path": "/api/cart", "status": 200 }
+  ],
+  "instruction": "Stop. Do not click to discover. Run captcha detector first; if anti-bot pending use witness-captcha not this file. Else reconcile flow JSON or re-explore from a known page.",
+  "captchaCheck": "Prefer classifying CAPTCHA before reporting missing button or unknown screen."
+}

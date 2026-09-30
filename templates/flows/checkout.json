@@ -1,0 +1,65 @@
+{
+  "id": "checkout",
+  "baseUrl": "http://localhost:4200",
+  "pages": {
+    "payment": {
+      "url": "/checkout",
+      "title": "Checkout",
+      "regions": [
+        {
+          "id": "pay-form",
+          "tag": "form",
+          "role": "form",
+          "name": "Pagamento"
+        }
+      ],
+      "elements": [
+        {
+          "id": "pay",
+          "tag": "button",
+          "role": "button",
+          "name": "Confirmar pagamento",
+          "classes": ["btn", "btn-primary"],
+          "stateClasses": [],
+          "attrs": { "data-testid": "pay" },
+          "visible": true,
+          "enabled": true,
+          "parent": "pay-form",
+          "motion": { "name": "none", "running": false, "blocksAction": false }
+        }
+      ]
+    },
+    "confirmed": {
+      "url": "/pedido/confirmado",
+      "title": "Pedido confirmado",
+      "regions": [],
+      "elements": []
+    }
+  },
+  "steps": [
+    {
+      "from": "payment",
+      "target": "pay",
+      "intent": "confirm_payment",
+      "smoke": true,
+      "surface": "desktop",
+      "action": {
+        "role": "button",
+        "names": ["Pagar", "Finalizar", "Confirmar pagamento", "Concluir pagamento"]
+      },
+      "to": "confirmed",
+      "expect": "vejo a confirmação do pedido",
+      "oracle": {
+        "ui": { "visible": ["Pedido confirmado", "confirmação"] },
+        "network": [
+          {
+            "method": "POST",
+            "path": "/payments",
+            "expectedStatus": 201,
+            "mock": "json-server"
+          }
+        ]
+      }
+    }
+  ]
+}

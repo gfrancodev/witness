@@ -1,0 +1,16 @@
+{
+  "runId": "example-checkout-visual",
+  "flowId": "checkout",
+  "surface": "desktop",
+  "status": "pass",
+  "mediaManifest": ".witness/runs/example-checkout-visual/media-manifest.json",
+  "steps": [
+    {
+      "intent": "confirm_payment",
+      "status": "pass",
+      "mediaMode": "screenshot",
+      "media": ["shot-confirm-1", "frame-jam-1"],
+      "evidence": "- heading \"Pedido confirmado\" [level=1]"
+    }
+  ]
+}

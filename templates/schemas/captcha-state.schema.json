@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "witness.captcha.state",
+  "type": "object",
+  "required": ["provider", "mode", "status", "confidence"],
+  "properties": {
+    "runId": { "type": "string" },
+    "pageId": { "type": "string" },
+    "detectedAt": { "type": "string", "format": "date-time" },
+    "provider": {
+      "enum": ["recaptcha", "hcaptcha", "turnstile", "custom", "unknown"]
+    },
+    "mode": {
+      "enum": ["checkbox", "invisible", "interactive", "passive", "unknown"]
+    },
+    "status": {
+      "enum": ["detected", "pending", "solved", "failed", "expired"]
+    },
+    "siteKey": { "type": "string" },
+    "iframe": { "type": "string" },
+    "responseField": { "type": "string" },
+    "challenge": {
+      "enum": ["none", "checkbox", "imageselect", "audio", "unknown"]
+    },
+    "signals": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "outcome": {
+      "enum": ["continue", "CAPTCHA_SOLVED", "CAPTCHA_REQUIRED", "BLOCKED_BY_CAPTCHA"]
+    },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "resolution": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "enum": ["official-test", "mock", "human", "session"]
+        },
+        "durationMs": { "type": "integer", "minimum": 0 }
+      }
+    }
+  }
+}

@@ -1,0 +1,227 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "witness.config",
+  "type": "object",
+  "required": ["version", "project", "environment", "environments", "healing"],
+  "properties": {
+    "version": { "const": 1 },
+    "project": {
+      "type": "object",
+      "required": ["name"],
+      "properties": { "name": { "type": "string" } }
+    },
+    "environment": {
+      "type": "object",
+      "required": ["default"],
+      "properties": { "default": { "type": "string" } }
+    },
+    "environments": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["baseUrl"],
+        "properties": {
+          "baseUrl": { "type": "string" },
+          "readonly": { "type": "boolean" }
+        }
+      }
+    },
+    "paths": {
+      "type": "object",
+      "properties": {
+        "flows": { "type": "string" },
+        "features": { "type": "string" }
+      }
+    },
+    "surfaces": { "type": "object" },
+    "defaultSurface": { "type": "string" },
+    "mcps": { "type": "object" },
+    "sessions": {
+      "type": "object",
+      "properties": {
+        "storageState": { "type": "string" },
+        "default": {
+          "type": "object",
+          "properties": { "persist": { "type": "boolean" } }
+        },
+        "sites": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/sessionSite" }
+        }
+      }
+    },
+    "sites": {
+      "type": "object",
+      "properties": {
+        "allowlist": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "crossSite": {
+          "type": "object",
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "maxHopsPerRun": { "type": "integer", "minimum": 0 },
+            "hops": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/crossSiteHop" }
+            }
+          }
+        }
+      }
+    },
+    "accounts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/account" }
+    },
+    "captcha": {
+      "type": "object",
+      "properties": {
+        "detection": {
+          "type": "object",
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "providers": {
+              "type": "array",
+              "items": {
+                "enum": ["turnstile", "recaptcha", "hcaptcha", "generic"]
+              }
+            }
+          }
+        },
+        "environments": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "strategy": { "enum": ["test", "human", "mock"] }
+            }
+          }
+        },
+        "behavior": {
+          "type": "object",
+          "properties": {
+            "unknownCaptcha": {
+              "type": "object",
+              "properties": {
+                "action": { "enum": ["pause", "block"] }
+              }
+            },
+            "timeoutSeconds": { "type": "integer", "minimum": 1 },
+            "reuseAuthenticatedState": { "type": "boolean" },
+            "captureEvidence": { "type": "boolean" }
+          }
+        },
+        "providers": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "testMode": { "enum": ["official"] }
+            }
+          }
+        }
+      }
+    },
+    "reports": {
+      "type": "object",
+      "properties": {
+        "har": { "enum": ["on-fail", "always", "off"] }
+      }
+    },
+    "healing": {
+      "type": "object",
+      "properties": {
+        "assertions": { "const": "never" }
+      }
+    },
+    "security": { "type": "object" },
+    "media": {
+      "type": "object",
+      "properties": {
+        "ffmpeg": {
+          "type": "object",
+          "properties": {
+            "available": { "type": "boolean" },
+            "required": { "type": "boolean" }
+          }
+        },
+        "visionCap": { "enum": ["opt-in", "never"] },
+        "maxFramesPerRun": { "type": "integer", "minimum": 1 },
+        "outputSubdir": { "type": "string" }
+      }
+    },
+    "mocks": {
+      "type": "object",
+      "properties": {
+        "jsonServer": {
+          "type": "object",
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "port": { "type": "integer" },
+            "db": { "type": "string" }
+          }
+        }
+      }
+    },
+    "testing": {
+      "type": "object",
+      "properties": {
+        "unitRunner": { "type": ["string", "null"] }
+      }
+    }
+  },
+  "$defs": {
+    "sessionSite": {
+      "type": "object",
+      "required": ["id", "origins"],
+      "properties": {
+        "id": { "type": "string" },
+        "origins": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "persist": { "type": "boolean" },
+        "storageState": { "type": "string" },
+        "store": { "enum": ["storage-state", "user-data-dir"] },
+        "userDataDir": { "type": "string" },
+        "include": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "cookies",
+              "localStorage",
+              "sessionStorage",
+              "indexedDB",
+              "cache"
+            ]
+          }
+        },
+        "reuseAcrossRuns": { "type": "boolean" }
+      }
+    },
+    "crossSiteHop": {
+      "type": "object",
+      "required": ["id", "from", "to"],
+      "properties": {
+        "id": { "type": "string" },
+        "from": { "type": "string" },
+        "to": { "type": "string" },
+        "purpose": { "type": "string" },
+        "readonly": { "type": "boolean" },
+        "returnTo": { "type": "string" },
+        "shareContext": { "type": "boolean" }
+      }
+    },
+    "account": {
+      "type": "object",
+      "required": ["id", "site"],
+      "properties": {
+        "id": { "type": "string" },
+        "site": { "type": "string" },
+        "storageState": { "type": "string" },
+        "userDataDir": { "type": "string" }
+      }
+    }
+  }
+}

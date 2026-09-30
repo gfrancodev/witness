@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "witness.flow",
+  "type": "object",
+  "required": ["id", "pages", "steps"],
+  "properties": {
+    "id": { "type": "string" },
+    "baseUrl": { "type": "string" },
+    "actors": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "mode": { "enum": ["parallel", "collaborative"] },
+    "pages": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "url": { "type": "string" },
+          "title": { "type": "string" },
+          "site": { "type": "string" },
+          "regions": { "type": "array" },
+          "elements": { "type": "array" },
+          "captcha": { "$ref": "#/$defs/captchaStateSubset" }
+        }
+      }
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "target", "intent", "to", "expect"],
+        "properties": {
+          "from": { "type": "string" },
+          "target": { "type": "string" },
+          "intent": { "type": "string" },
+          "surface": { "type": "string" },
+          "site": { "type": "string" },
+          "actor": { "type": "string" },
+          "barrier": { "type": "string" },
+          "afterBarrier": { "type": "string" },
+          "hop": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "returnTo": { "type": "string" },
+              "capture": {
+                "type": "array",
+                "items": { "enum": ["snapshot", "http"] }
+              }
+            }
+          },
+          "action": { "type": "object" },
+          "to": { "type": "string" },
+          "expect": { "type": "string" },
+          "smoke": { "type": "boolean" },
+          "oracle": {
+            "type": "object",
+            "properties": {
+              "ui": { "type": "object" },
+              "network": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "method": { "type": "string" },
+                    "path": { "type": "string" },
+                    "expectedStatus": { "type": "integer" },
+                    "mock": {
+                      "enum": ["json-server", "browser-route", "live"]
+                    }
+                  }
+                }
+              },
+              "visual": {
+                "type": "object",
+                "properties": {
+                  "lookFor": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "mediaRequired": { "type": "boolean" }
+                }
+              },
+              "captcha": {
+                "type": "object",
+                "properties": {
+                  "expectProtection": { "type": "boolean" },
+                  "tokenScenario": {
+                    "enum": ["valid", "missing", "invalid", "expired", "reuse"]
+                  },
+                  "serverMustValidate": { "type": "boolean" }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "captchaStateSubset": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "enum": ["recaptcha", "hcaptcha", "turnstile", "custom", "unknown"]
+        },
+        "mode": {
+          "enum": ["checkbox", "invisible", "interactive", "passive", "unknown"]
+        },
+        "status": {
+          "enum": ["detected", "pending", "solved", "failed", "expired"]
+        },
+        "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    }
+  }
+}

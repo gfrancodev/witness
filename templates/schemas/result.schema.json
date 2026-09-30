@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "witness.run.result",
+  "type": "object",
+  "required": ["runId", "flowId", "surface", "steps"],
+  "properties": {
+    "runId": { "type": "string" },
+    "flowId": { "type": "string" },
+    "surface": { "type": "string" },
+    "status": { "enum": ["pass", "fail", "blocked"] },
+    "concurrency": { "enum": ["sub-agents", "sequential-fallback"] },
+    "actors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "status"],
+        "properties": {
+          "id": { "type": "string" },
+          "status": { "enum": ["pass", "fail", "blocked", "skipped"] },
+          "resultRef": { "type": "string" }
+        }
+      }
+    },
+    "mediaManifest": { "type": "string" },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["intent", "status"],
+        "properties": {
+          "intent": { "type": "string" },
+          "status": { "enum": ["pass", "fail", "skipped"] },
+          "evidence": { "type": "string" },
+          "actor": { "type": "string" },
+          "mediaMode": { "enum": ["aria-only", "screenshot", "vision", "os-ocr"] },
+          "media": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "captcha": {
+            "type": "object",
+            "properties": {
+              "provider": { "type": "string" },
+              "status": { "type": "string" }
+            }
+          },
+          "captchaStateRef": { "type": "string" }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": { "status": { "const": "pass" } },
+              "required": ["status"]
+            },
+            "then": {
+              "required": ["evidence"],
+              "properties": {
+                "evidence": { "type": "string", "minLength": 1 }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": { "status": { "const": "fail" } },
+              "required": ["status"]
+            },
+            "then": {
+              "required": ["evidence"],
+              "properties": {
+                "evidence": { "type": "string", "minLength": 1 }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

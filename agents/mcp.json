@@ -1,0 +1,39 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp",
+        "--browser",
+        "chromium",
+        "--caps",
+        "devtools",
+        "--codegen",
+        "none",
+        "--console-level",
+        "warning",
+        "--snapshot-mode",
+        "full",
+        "--image-responses",
+        "omit",
+        "--file-paths",
+        "relative",
+        "--test-id-attribute",
+        "data-testid",
+        "--timeout-action",
+        "8000",
+        "--timeout-navigation",
+        "30000",
+        "--timeout-settle",
+        "1500",
+        "--save-session",
+        "--output-dir",
+        ".witness/runs"
+      ]
+    },
+    "jam": {
+      "url": "https://mcp.jam.dev/mcp"
+    }
+  }
+}

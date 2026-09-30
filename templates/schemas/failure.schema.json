@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "witness.run.failure",
+  "type": "object",
+  "required": ["status", "classification", "firstDivergence", "confidence"],
+  "properties": {
+    "status": { "const": "failed" },
+    "classification": {
+      "enum": [
+        "frontend",
+        "backend",
+        "network",
+        "data",
+        "authentication",
+        "authorization",
+        "visual",
+        "flaky",
+        "environment",
+        "captcha_unresolved",
+        "security_regression",
+        "unknown"
+      ]
+    },
+    "firstDivergence": {
+      "type": "object",
+      "required": ["type", "detail"],
+      "properties": {
+        "type": { "enum": ["ui", "network", "captcha"] },
+        "detail": { "type": "string", "minLength": 1 },
+        "request": { "type": "string" },
+        "expected": {},
+        "actual": {},
+        "mediaRef": { "type": "string" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "type": { "const": "network" } },
+            "required": ["type"]
+          },
+          "then": {
+            "required": ["request", "expected", "actual"]
+          }
+        }
+      ]
+    },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
+  }
+}

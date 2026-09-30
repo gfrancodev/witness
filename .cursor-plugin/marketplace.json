@@ -1,0 +1,24 @@
+{
+  "name": "witness",
+  "owner": {
+    "name": "Gustavo Franco",
+    "email": "contact@gfrancodev.com"
+  },
+  "metadata": {
+    "description": "Witness QA plugin. See it. Test it. Prove it.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "witness",
+      "source": ".",
+      "description": "See it. Test it. Prove it. Records only observed steps, documents them in Gherkin, and proves them with Playwright MCP.",
+      "version": "0.1.0",
+      "license": "MIT",
+      "keywords": ["qa", "e2e", "playwright", "bdd", "testing"],
+      "logo": "assets/logo.png",
+      "category": "developer-tools",
+      "tags": ["qa", "exploration", "evidence", "playwright"]
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "project": { "name": "my-app" },
+  "environment": { "default": "local" },
+  "environments": {
+    "local": { "baseUrl": "http://localhost:4200" },
+    "staging": { "baseUrl": "https://staging.example.com" },
+    "production": { "baseUrl": "https://example.com", "readonly": true }
+  },
+  "paths": {
+    "flows": ".witness/graph/flows",
+    "features": "features"
+  },
+  "surfaces": {
+    "desktop": { "viewport": "1280x720" },
+    "tablet": { "viewport": "768x1024" },
+    "mobile": { "device": "iPhone 15" }
+  },
+  "defaultSurface": "desktop",
+  "mcps": {
+    "playwright": { "enabled": true, "package": "@playwright/mcp@latest", "browser": "chromium" },
+    "lightpanda": { "enabled": false, "cdpEndpoint": "ws://127.0.0.1:9222", "obeyRobots": true },
+    "computerControl": { "enabled": false },
+    "jam": {
+      "enabled": true,
+      "mode": "mcp",
+      "url": "https://mcp.jam.dev/mcp"
+    }
+  },
+  "sessions": {
+    "default": { "persist": false },
+    "sites": [
+      {
+        "id": "app",
+        "origins": ["http://localhost:4200"],
+        "persist": true,
+        "storageState": ".witness/sessions/app.json",
+        "store": "storage-state",
+        "include": ["cookies", "localStorage"],
+        "reuseAcrossRuns": true
+      },
+      {
+        "id": "idp",
+        "origins": ["https://login.example.com"],
+        "persist": true,
+        "storageState": ".witness/sessions/idp.json",
+        "store": "user-data-dir",
+        "userDataDir": ".witness/sessions/profiles/idp",
+        "include": ["cookies", "localStorage", "indexedDB", "sessionStorage", "cache"],
+        "reuseAcrossRuns": true
+      }
+    ]
+  },
+  "sites": {
+    "allowlist": ["http://localhost:4200", "https://login.example.com"],
+    "crossSite": {
+      "enabled": true,
+      "maxHopsPerRun": 3,
+      "hops": [
+        {
+          "id": "read-idp-status",
+          "from": "app",
+          "to": "idp",
+          "purpose": "read a value already visible after login",
+          "readonly": true,
+          "returnTo": "app",
+          "shareContext": true
+        }
+      ]
+    }
+  },
+  "accounts": [
+    {
+      "id": "buyer",
+      "site": "app",
+      "storageState": ".witness/sessions/accounts/buyer.json",
+      "userDataDir": ".witness/sessions/profiles/buyer"
+    },
+    {
+      "id": "seller",
+      "site": "app",
+      "storageState": ".witness/sessions/accounts/seller.json",
+      "userDataDir": ".witness/sessions/profiles/seller"
+    }
+  ],
+  "captcha": {
+    "detection": {
+      "enabled": true,
+      "providers": ["turnstile", "recaptcha", "hcaptcha", "generic"]
+    },
+    "environments": {
+      "local": { "strategy": "test" },
+      "staging": { "strategy": "test" },
+      "production": { "strategy": "human" }
+    },
+    "behavior": {
+      "unknownCaptcha": { "action": "pause" },
+      "timeoutSeconds": 120,
+      "reuseAuthenticatedState": true,
+      "captureEvidence": true
+    },
+    "providers": {
+      "turnstile": { "testMode": "official" },
+      "recaptcha": { "testMode": "official" },
+      "hcaptcha": { "testMode": "official" }
+    }
+  },
+  "reports": {
+    "har": "on-fail"
+  },
+  "healing": {
+    "navigation": "auto",
+    "locator": "auto",
+    "assertions": "never"
+  },
+  "security": {
+    "productionReadOnly": true
+  },
+  "media": {
+    "ffmpeg": { "available": false, "required": false },
+    "visionCap": "opt-in",
+    "maxFramesPerRun": 30,
+    "outputSubdir": "media"
+  },
+  "mocks": {
+    "jsonServer": {
+      "enabled": false,
+      "port": 3000,
+      "db": ".witness/mocks/db.json"
+    }
+  },
+  "testing": {
+    "unitRunner": null
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "runId": "two-actors-demo",
+  "flowId": "marketplace-order",
+  "surface": "desktop",
+  "status": "pass",
+  "concurrency": "sub-agents",
+  "actors": [
+    {
+      "id": "buyer",
+      "status": "pass",
+      "resultRef": ".witness/runs/two-actors-demo/actors/buyer/result.json"
+    },
+    {
+      "id": "seller",
+      "status": "pass",
+      "resultRef": ".witness/runs/two-actors-demo/actors/seller/result.json"
+    }
+  ],
+  "steps": [
+    {
+      "intent": "place_order",
+      "actor": "buyer",
+      "status": "pass",
+      "evidence": "- alert \"Order placed\""
+    },
+    {
+      "intent": "see_order",
+      "actor": "seller",
+      "status": "pass",
+      "evidence": "- row \"Order #1042\" [selected]"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "computer-control": {
+      "command": "uvx",
+      "args": ["computer-control-mcp@latest"],
+      "env": {
+        "COMPUTER_CONTROL_MCP_SCREENSHOT_DIR": ".witness/runs"
+      }
+    }
+  }
+}

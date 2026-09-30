@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "witness.run.har-report",
+  "type": "object",
+  "required": ["runId", "flowId", "kind", "source", "entries"],
+  "properties": {
+    "runId": { "type": "string" },
+    "flowId": { "type": "string" },
+    "kind": { "const": "har" },
+    "source": { "enum": ["har", "network-requests"] },
+    "harPath": { "type": "string" },
+    "tracePath": { "type": "string" },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["stepIntent", "method", "path", "status", "match"],
+        "properties": {
+          "stepIntent": { "type": "string" },
+          "method": { "type": "string" },
+          "path": { "type": "string" },
+          "status": { "type": "integer" },
+          "durationMs": { "type": "integer", "minimum": 0 },
+          "oracleExpectedStatus": { "type": "integer" },
+          "match": { "enum": ["expected", "mismatch", "undeclared"] }
+        }
+      }
+    }
+  }
+}

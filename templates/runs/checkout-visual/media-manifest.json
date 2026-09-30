@@ -1,0 +1,24 @@
+{
+  "runId": "example-checkout-visual",
+  "artifacts": [
+    {
+      "id": "shot-confirm-1",
+      "kind": "screenshot",
+      "path": ".witness/runs/example-checkout-visual/media/confirm.png",
+      "source": "browser_take_screenshot",
+      "width": 1280,
+      "height": 720,
+      "intent": "confirm_payment"
+    },
+    {
+      "id": "frame-jam-1",
+      "kind": "frame",
+      "path": ".witness/runs/example-checkout-visual/media/frame-0001.jpg",
+      "source": "jam-recording.mp4",
+      "timeSeconds": 1.0,
+      "width": 1280,
+      "height": 720,
+      "intent": "confirm_payment"
+    }
+  ]
+}

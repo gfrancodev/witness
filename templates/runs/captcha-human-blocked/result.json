@@ -1,0 +1,20 @@
+{
+  "runId": "captcha-human-blocked",
+  "flowId": "login",
+  "surface": "desktop",
+  "status": "blocked",
+  "steps": [
+    {
+      "intent": "open_login",
+      "status": "pass",
+      "evidence": "- heading \"Sign in\" [level=1]"
+    },
+    {
+      "intent": "submit_credentials",
+      "status": "fail",
+      "evidence": "- iframe \"Widget containing a Cloudflare security challenge\"",
+      "captcha": { "provider": "turnstile", "status": "pending" },
+      "captchaStateRef": ".witness/runs/captcha-human-blocked/captcha-state.json"
+    }
+  ]
+}

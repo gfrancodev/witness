@@ -1,0 +1,12 @@
+{
+  "status": "failed",
+  "classification": "backend",
+  "firstDivergence": {
+    "type": "network",
+    "detail": "Payment API returned 500 while UI showed success spinner",
+    "request": "POST /api/checkout/pay",
+    "expected": { "status": 201 },
+    "actual": { "status": 500 }
+  },
+  "confidence": 0.92
+}

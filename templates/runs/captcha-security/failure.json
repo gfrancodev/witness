@@ -1,0 +1,12 @@
+{
+  "status": "failed",
+  "classification": "security_regression",
+  "firstDivergence": {
+    "type": "captcha",
+    "detail": "Turnstile widget rendered but POST /api/login returned 200 without server-side siteverify",
+    "request": "POST /api/login",
+    "expected": { "status": 401, "serverMustValidate": true },
+    "actual": { "status": 200, "captchaToken": null }
+  },
+  "confidence": 0.92
+}

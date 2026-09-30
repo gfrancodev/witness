@@ -1,0 +1,10 @@
+{
+  "status": "failed",
+  "classification": "visual",
+  "firstDivergence": {
+    "type": "ui",
+    "detail": "Confirmation banner color matches success in screenshot but heading text missing from ARIA tree",
+    "mediaRef": "shot-confirm-1"
+  },
+  "confidence": 0.78
+}

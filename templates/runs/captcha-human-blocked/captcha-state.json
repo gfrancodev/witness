@@ -1,0 +1,11 @@
+{
+  "runId": "captcha-human-blocked",
+  "pageId": "login",
+  "detectedAt": "2026-09-25T18:30:00Z",
+  "provider": "turnstile",
+  "mode": "checkbox",
+  "status": "pending",
+  "siteKey": "redacted-in-evidence-only",
+  "responseField": "cf-turnstile-response",
+  "confidence": 0.88
+}

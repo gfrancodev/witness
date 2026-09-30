@@ -1,0 +1,47 @@
+# Build and release artifacts
+dist/
+*.zip
+
+# Witness runtime (evidence, sessions, browser profiles, recorded flows)
+.witness/
+
+# App-under-test layout from /witness:init (not the plugin templates)
+/witness.config.json
+/features/
+
+# Secrets and environment
+.env
+.env.*
+.secrets
+*.pem
+*.key
+credentials.json
+
+# Python (scripts/)
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node (optional local mocks, e.g. json-server)
+node_modules/
+
+# Agent / IDE tooling
+.omo/
+.idea/
+.vscode/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs and scratch
+*.log
+tmp/
+temp/

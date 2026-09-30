@@ -1,0 +1,32 @@
+{
+  "name": "witness",
+  "version": "0.1.0",
+  "description": "See it. Test it. Prove it. Records only observed steps, documents them in Gherkin, and proves them with Playwright MCP.",
+  "author": {
+    "name": "Gustavo Franco",
+    "email": "contact@gfrancodev.com"
+  },
+  "homepage": "https://github.com/gfrancodev/witness",
+  "repository": "https://github.com/gfrancodev/witness",
+  "license": "MIT",
+  "keywords": ["qa", "e2e", "playwright", "bdd", "testing"],
+  "skills": "./skills/",
+  "mcpServers": "./agents/mcp.json",
+  "interface": {
+    "displayName": "Witness",
+    "shortDescription": "See it. Test it. Prove it.",
+    "longDescription": "Witness walks a web product, records only observed steps as JSON, documents that journey in Gherkin, and proves it with Playwright MCP. A pass requires snapshot evidence. It does not invent steps or solve captcha image puzzles.",
+    "developerName": "Gustavo Franco",
+    "category": "Developer Tools",
+    "capabilities": [
+      "qa",
+      "exploration",
+      "evidence",
+      "playwright"
+    ],
+    "websiteURL": "https://github.com/gfrancodev/witness",
+    "privacyPolicyURL": "https://github.com/gfrancodev/witness/blob/main/PRIVACY.md",
+    "defaultPrompt": "/witness:mission Make sure the main product flow works end to end.",
+    "logo": "./assets/logo.png"
+  }
+}
