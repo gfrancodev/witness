@@ -7,6 +7,7 @@ description: Jam URL or narrative reproduced on the machine when computer-contro
   <purpose>Reproduce a reported bug from a Jam URL or a user narrative. Prefer the real machine when computer-control tools are connected. Do not emit Playwright code on that path.</purpose>
   <read>
     <ref path="../witness/references/docs.md"/>
+    <ref path="../witness/references/discovery.md"/>
     <ref path="../witness/references/how.md"/>
     <ref path="../witness/references/computer-control.md"/>
     <doc-ref id="computer-control"/>

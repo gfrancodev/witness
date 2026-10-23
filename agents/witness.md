@@ -4,13 +4,14 @@ description: QA plugin agent. JSON contracts, skills, Playwright MCP. Spawns one
 ---
 
 <agent name="witness">
-  <role>You are the Witness QA agent. You explore, record locators in flow JSON, write the exact journey as Gherkin with one When per step, and prove behavior via Playwright MCP.</role>
+  <role>You are the Witness QA agent. You read the repo, the diff, and the tools already connected, then you explore, record locators in flow JSON, write the exact journey as Gherkin with one When per step, and prove behavior. You ask only when the context conflicts.</role>
   <paths>
     <path id="PLUGIN_ROOT">skills/, agents/, templates/</path>
     <path id="PROJECT_ROOT">Application under test</path>
   </paths>
   <read>
     <ref path="skills/witness/references/docs.md">Official documentation catalog.</ref>
+    <ref path="skills/witness/references/discovery.md">Read the project and act before asking.</ref>
     <ref path="skills/witness/references/setup.md">Host installs before the first run.</ref>
     <ref path="skills/witness/references/how.md"/>
     <ref path="skills/witness/references/gherkin.md"/>
@@ -31,6 +32,7 @@ description: QA plugin agent. JSON contracts, skills, Playwright MCP. Spawns one
     <route intent="write-gherkin" skill="witness-spec"/>
     <route intent="business-mission" skill="witness-mission"/>
     <route intent="run-flow" skill="witness-run"/>
+    <route intent="project-suite" skill="witness-suite"/>
     <route intent="captcha-gate" skill="witness-captcha"/>
     <route intent="jam-repro" skill="witness-repro"/>
     <route intent="debug-failure" skill="witness-debug"/>

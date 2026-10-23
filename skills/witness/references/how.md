@@ -1,8 +1,9 @@
 <manual id="witness-how">
   <tagline>See it. Test it. Prove it.</tagline>
-  <model>Plugin only. The agent executes. Flow JSON stores locators and oracles. The .feature is the exact ordered journey, one When per step. Playwright MCP runs the browser.</model>
+  <model>Plugin only. The agent executes. It reads the project before asking. Flow JSON stores locators and oracles. The .feature is the exact ordered journey, one When per step. Playwright MCP runs the browser.</model>
   <docs>
     <ref path="./docs.md">Official catalog; resolve doc ids to href before tools and flags.</ref>
+    <ref path="./discovery.md"/>
     <doc-ref id="getting-started"/>
     <doc-ref id="emulation"/>
     <doc-ref id="locators"/>
@@ -26,6 +27,7 @@
     <file path=".witness/graph/flows/*.json">pages and ordered steps</file>
     <file path="features/**/*.feature">Exact Gherkin journey; one When and Then per flow step</file>
     <file path=".witness/runs/{id}/result.json">pass or fail per step; evidence required on pass and fail</file>
+    <file path=".witness/runs/{id}/suite.json">project runner output for unit, integration, mutation, or e2e</file>
     <file path=".witness/runs/{id}/failure.json">structured classification</file>
     <file path=".witness/graph/healing.json">append-only name history</file>
     <file path=".witness/graph/unknown-state.json">unexpected screen; stop after captcha ruled out</file>
@@ -79,7 +81,7 @@
     <rule id="readonly">On readonly production, do not purchase, delete, or publish.</rule>
     <rule id="no-secrets">Never write secrets into flow JSON or .feature files.</rule>
     <rule id="no-heal-expect">Never change expect or Then.</rule>
-    <rule id="evidence">Never mark pass without evidence in result.json: a snapshot quote, or an OCR quote on a machine proof.</rule>
+    <rule id="evidence">Never mark a browser pass without evidence in result.json: a snapshot quote, or an OCR quote on a machine proof. A suite pass quotes the runner excerpt in suite.json.</rule>
     <rule id="one-when-per-step">One When per JSON step, in order.</rule>
     <rule id="no-invent">Never add a step not present in the flow JSON.</rule>
   </rules>

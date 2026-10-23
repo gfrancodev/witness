@@ -9,6 +9,7 @@ description: List pages and transitions without matching steps (/witness:gaps).
     <ref path="../witness/references/docs.md"/>
     <ref path="../witness/references/how.md"/>
     <ref path="../witness/references/gherkin.md"/>
+    <ref path="../witness/references/testing.md"/>
     <doc-ref id="gherkin-reference"/>
     <doc-ref id="gherkin-languages"/>
   </read>
@@ -20,6 +21,7 @@ description: List pages and transitions without matching steps (/witness:gaps).
     <step n="5">List feature comment intents and When lines without a matching JSON step.</step>
     <step n="5b">List flows with no .feature, and flows where count(When) is less than count(steps). Those are thin scenarios, not coverage.</step>
     <step n="6">Suggest witness-explore for missing observations and witness-spec to expand a thin feature. Do not auto-invent steps.</step>
+    <step n="7">When a diff is in context, list a changed module with no unit or integration test file for that layer. Always report mutation absent when testing.layers.mutation.command is null. Do not install a mutator.</step>
   </steps>
   <rules>
     <rule id="semantic-first">ARIA role and accessible name, then stable attrs, then structure, vision last.</rule>
@@ -29,5 +31,5 @@ description: List pages and transitions without matching steps (/witness:gaps).
     <rule id="evidence">Never mark pass without snapshot evidence in result.json.</rule>
     <rule id="no-invent">Never add a step not present in the flow JSON.</rule>
   </rules>
-  <done>Gap report with flow ids and suggested explore targets.</done>
+  <done>Gap report with flow ids, missing layers, and suggested explore or suite targets.</done>
 </skill>

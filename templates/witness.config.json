@@ -130,6 +130,12 @@
     }
   },
   "testing": {
-    "unitRunner": null
+    "unitRunner": null,
+    "layers": {
+      "unit": { "command": null },
+      "integration": { "command": null },
+      "mutation": { "command": null },
+      "e2e": { "command": null }
+    }
   }
 }

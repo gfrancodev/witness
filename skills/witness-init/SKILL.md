@@ -1,12 +1,13 @@
 ---
 name: witness-init
-description: Bootstrap witness.config.json, MCP interview, and .witness folders (/witness:init).
+description: Discover the repo, write witness.config.json, and continue the requested skill (/witness:init).
 ---
 
 <skill name="witness-init">
-  <purpose>First-time setup: MCP interview then copy config and create graph directories.</purpose>
+  <purpose>Read the project and fill witness.config.json. Ask only when two sources disagree or a tool must be installed. Then continue the skill the user already asked for.</purpose>
   <read>
     <ref path="../witness/references/docs.md"/>
+    <ref path="../witness/references/discovery.md"/>
     <ref path="../witness/references/how.md"/>
     <ref path="../witness/references/mcps.md"/>
     <ref path="../witness/references/setup.md"/>
@@ -29,34 +30,24 @@ description: Bootstrap witness.config.json, MCP interview, and .witness folders 
   <when>User requests init, bootstrap, or any Witness skill while witness.config.json is missing in PROJECT_ROOT.</when>
   <steps>
     <phase id="prerequisites" order="first">
-      <instruction>Follow setup.md. Check node, npx, and git. On missing, show the doc URL and install command. Stop until the user confirms.</instruction>
-      <instruction>Ask whether to install Lightpanda. Default no. If yes, check OS against lightpanda-requirements, then run the one-liner or show the Docker command. Verify command -v lightpanda. Record mcps.lightpanda.enabled, cdpEndpoint ws://127.0.0.1:9222, obeyRobots true. Never store a cloud token.</instruction>
-      <instruction>Tell the user the serve command and that they start it before a run. Do not leave lightpanda serve running after init.</instruction>
-      <instruction>If Playwright later reports a missing browser, install Chromium from the browsers doc.</instruction>
+      <instruction>Follow discovery.md and setup.md. Check node, npx, and git. Record ffmpeg with command -v. Do not ask about Lightpanda or ffmpeg. Show an install command and stop only when the next skill cannot run without that tool.</instruction>
+      <instruction>If Playwright later reports a missing browser, install Chromium from the browsers doc after the user confirms that one install.</instruction>
     </phase>
     <phase id="mcp-interview">
-      <instruction>One choice at a time. For each: explain purpose, show real install command, ask yes or no.</instruction>
-      <item id="playwright">Browser for the product. npx @playwright/mcp@latest</item>
-      <item id="computer-control">Fast proof on the machine, and native OS dialogs. If list_windows or take_screenshot_with_ocr is already connected, set mcps.computerControl.enabled true and do not ask again. Otherwise ask, and on yes merge PLUGIN_ROOT/agents/mcp.optional.json. Do not install uvx unless the user asks. Read computer-control.md.</item>
-      <item id="jam">Bug context from Jam links. Merge jam url https://mcp.jam.dev/mcp from PLUGIN_ROOT/agents/mcp.json; restart IDE; OAuth per jam-mcp doc. Set witness.config.json mcps.jam enabled mode mcp.</item>
-      <item id="native-app">If not a website, Witness is web-focused; point to Maestro or user-named tool</item>
-      <instruction>Before writing MCP: command -v npx and, only when the user accepted computer-control and the tools are not already connected, command -v uvx. Merge playwright and jam servers from PLUGIN_ROOT/agents/mcp.json into project MCP config without fixed viewport on Playwright. Merge computer-control from mcp.optional.json only after a yes. If mcps.lightpanda.enabled, append --cdp-endpoint with the configured ws URL. Do not start a second browser.</instruction>
-      <instruction>Persist choices in witness.config.json mcps.</instruction>
+      <instruction>Do not ask yes or no per server. Record what is already connected. Merge playwright from PLUGIN_ROOT/agents/mcp.json when npx exists and the user asked to explore or run. Set computer-control enabled when its tools are connected. Enable jam only for a pasted Jam URL or when Jam tools are connected. Leave lightpanda disabled.</instruction>
+      <instruction>Before writing MCP: command -v npx. Merge playwright without a fixed viewport. Do not start a second browser. Persist mcps in witness.config.json.</instruction>
     </phase>
     <phase id="testing">
-      <instruction>Ask which unit test runner the app uses; record witness.config.json testing.unitRunner string or null.</instruction>
-      <instruction>Ask if json-server mock is needed; set mocks.jsonServer.enabled port and db path; optional copy templates/mocks/checkout-db.json to .witness/mocks/db.json.</instruction>
+      <instruction>Discover testing.layers from manifests, CI jobs, and test file paths per discovery.md and testing.md. Record each command or null. Set testing.unitRunner to the unit command. Do not ask the user to name a framework. Do not install a runner.</instruction>
+      <instruction>Leave mocks.jsonServer.enabled false unless a flow step already declares oracle.network mock json-server.</instruction>
       <ref path="../witness/references/testing.md"/>
       <doc-ref id="test-pyramid"/>
+      <doc-ref id="mutation-testing"/>
       <doc-ref id="json-server"/>
       <doc-ref id="api-testing"/>
     </phase>
     <phase id="captcha-sessions-actors">
-      <instruction>Explain captcha policies: test keys in local staging, human in production; no puzzle vision.</instruction>
-      <instruction>Ask which origins persist session; record sessions.sites with store include reuseAcrossRuns; create .witness/sessions/accounts/ and profiles/ when needed.</instruction>
-      <instruction>Ask sites.allowlist and crossSite hops if multi-origin flows expected.</instruction>
-      <instruction>Ask account ids for multi-user tests; paths only never passwords; record accounts array.</instruction>
-      <instruction>Add --caps=storage to Playwright MCP when any persist or accounts storageState.</instruction>
+      <instruction>Keep captcha defaults from the template: test keys on local and staging, human on production. Do not ask which origins persist. persist stays false until a login is observed. Do not ask for account ids until a flow names two actors. Never store passwords.</instruction>
       <ref path="../witness/references/captcha.md"/>
       <ref path="../witness/references/sessions.md"/>
       <ref path="../witness/references/actors.md"/>
@@ -64,28 +55,28 @@ description: Bootstrap witness.config.json, MCP interview, and .witness folders 
       <doc-ref id="turnstile-testing"/>
     </phase>
     <phase id="media">
-      <instruction>Ask if ffmpeg is installed command -v ffmpeg. Record witness.config.json media.ffmpeg.available and whether Jam video repro is expected.</instruction>
-      <instruction>Explain visionCap opt-in default; media.maxFramesPerRun and outputSubdir media.</instruction>
+      <instruction>command -v ffmpeg. Record media.ffmpeg.available. Keep visionCap opt-in. Do not ask.</instruction>
       <ref path="../witness/references/media.md"/>
       <doc-ref id="ffmpeg"/>
     </phase>
     <phase id="bootstrap">
       <when-missing file="witness.config.json">
         <step n="1">Copy PLUGIN_ROOT/templates/witness.config.json to PROJECT_ROOT/witness.config.json</step>
-        <step n="2">Ask project.name, environment local staging production, baseUrl</step>
-        <step n="3">Adjust surfaces desktop tablet mobile for the product</step>
+        <step n="2">Fill project.name, environment, and baseUrl from discovery.md. Ask only when two sources name different hosts.</step>
+        <step n="3">Keep defaultSurface desktop.</step>
         <step n="4">Create .witness/graph/flows/, .witness/graph/healing.json as [], .witness/runs/, .witness/sessions/, .witness/sessions/accounts/, .witness/sessions/profiles/, .witness/mocks/, features/ or paths.features</step>
-        <step n="5">Optional copy templates/flows/checkout.json and templates/features/checkout.feature as examples</step>
+        <step n="5">Do not copy the checkout example unless the repo has no app to observe.</step>
       </when-missing>
       <when-exists file="witness.config.json">
-        <instruction>Do not overwrite. Show baseUrl, paths, mcps, surfaces. Overwrite only on explicit user request preserving baseUrl and project.name.</instruction>
+        <instruction>Keep project.name, baseUrl, and paths. Refresh testing.layers and mcps from discovery.md. Overwrite the URL only when the user names a different host.</instruction>
       </when-exists>
     </phase>
     <phase id="close">
-      <instruction>List available skills and suggest witness-explore with the app URL.</instruction>
+      <instruction>In the same turn, continue the skill the user asked for. A goal goes to witness-mission or witness-suite. A URL goes to witness-explore. A Jam link or bug narrative goes to witness-repro. A diff with no screen goes to witness-suite. Do not stop after listing skills.</instruction>
     </phase>
   </steps>
   <rules>
+    <rule id="discover-first">Ask only when two hosts disagree, a production write is required, or a tool must be installed.</rule>
     <rule id="semantic-first">ARIA role and accessible name, then stable attrs, then structure, vision last.</rule>
     <rule id="readonly">On readonly production, do not purchase, delete, or publish.</rule>
     <rule id="no-secrets">Never write secrets into flow JSON or .feature files.</rule>
@@ -93,5 +84,5 @@ description: Bootstrap witness.config.json, MCP interview, and .witness folders 
     <rule id="evidence">Never mark pass without snapshot evidence in result.json.</rule>
     <rule id="no-invent">Never add a step not present in the flow JSON.</rule>
   </rules>
-  <done>witness.config.json exists, mcps recorded, directories created, user knows next explore step.</done>
+  <done>witness.config.json matches the repo. The requested skill has started. Questions were only for a conflicting host, a production write, or a missing tool.</done>
 </skill>

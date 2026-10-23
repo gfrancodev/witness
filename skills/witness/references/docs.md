@@ -136,10 +136,13 @@
       <use-when>Allocate effort across unit integration and E2E; Witness smoke maps to thin top slice.</use-when>
     </doc>
     <doc id="unit-test-bliki" href="https://martinfowler.com/bliki/UnitTest.html">
-      <use-when>What unit tests are; Witness only points at the project runner.</use-when>
+      <use-when>What a unit test is. Run the command the repo already declares. Read testing.md before writing a case.</use-when>
     </doc>
     <doc id="integration-test-bliki" href="https://martinfowler.com/bliki/IntegrationTest.html">
-      <use-when>Integration scope; pairs with oracle.network and mocks.</use-when>
+      <use-when>API, database, or queue without a browser. Prefer the project's mock. oracle.network stays on the UI flow.</use-when>
+    </doc>
+    <doc id="mutation-testing" href="https://stryker-mutator.io/docs/mutation-testing-elements/">
+      <use-when>Before any mutation CLI. killed, survived, and timeout come from the tool report. Then read the mutator the repo already uses. Do not invent flags.</use-when>
     </doc>
     <doc id="istqb-smoke" href="https://glossary.istqb.org/en_US/search?term=smoke+test">
       <use-when>@smoke tag meaning; main functionality before planned testing.</use-when>
@@ -160,7 +163,8 @@
   <local>
     <ref path="./setup.md">Host installs: Node, git, Playwright browsers, optional Lightpanda CDP, ffmpeg, uv.</ref>
     <ref path="./media.md">Media ladder, manifest, ffmpeg output layout.</ref>
-    <ref path="./testing.md">Unit integration smoke json-server browser-route contract.</ref>
+    <ref path="./testing.md">Pyramid for any stack: discover unit, integration, mutation, and e2e commands. Suite evidence is the runner output.</ref>
+    <ref path="./discovery.md">Read the repo, the diff, and connected MCPs before asking. Act in the same turn.</ref>
     <ref path="./captcha.md">Captcha detection resolveCaptcha human gate security oracle.</ref>
     <ref path="./sessions.md">Per-site storage hops allowlist IndexedDB sessionStorage.</ref>
     <ref path="./actors.md">Multi-account sub-agents barriers concurrency.</ref>

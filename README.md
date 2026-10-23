@@ -10,6 +10,8 @@ QA plugin for Cursor, Claude, and Codex. **The plugin has no application code.**
 
 Flow JSON stores pages, locators, and oracles. The `.feature` file is the exact journey: one `When` and one `Then` per observed step, in the same order. Gherkin is not a runner.
 
+Dropped into a repository, Witness reads the manifests, the diff, and the tools already connected, then acts. It asks only when two hosts disagree, a production write is required, or a tool must be installed.
+
 ## How it helps QA
 
 You describe the outcome. Witness walks the product, keeps only what it saw, and comes back with proof or a classified failure. It does not invent steps, and it does not rewrite the expected result to make a run green.
@@ -82,6 +84,7 @@ If the widget is shown and the API still accepts the request without server-side
 | `.witness/graph/flows/*.json` | Pages, ordered steps, `expect`, `oracle` (UI, HTTP, visual, captcha) |
 | `features/*.feature` | Exact journey: one `When`/`Then` per observed step (not a runner) |
 | `.witness/runs/*/result.json` | Pass, fail, or blocked; **evidence** required on pass and fail |
+| `.witness/runs/*/suite.json` | Unit, integration, mutation, or e2e command; **pass** only with exit code 0 and a quoted runner excerpt |
 | `.witness/runs/*/failure.json` | Classification and `firstDivergence` (`ui`, `network`, or `captcha`) |
 | `.witness/runs/*/captcha-state.json` | Provider, mode, status, confidence; no raw token in the flow |
 | `.witness/sessions/` | Cookies, `localStorage`, session sidecar, or Chromium profile per site or account |
@@ -102,13 +105,14 @@ Templates and JSON Schemas live under `templates/`. Official doc URLs the agent 
 | `/witness:spec` | `.feature` with one `When`/`Then` per observed step |
 | `/witness:mission` | Business goal to flow; feature only if `expect` passed |
 | `/witness:run` | Execute steps in order; `@critical` and `@smoke` filter |
+| `/witness:suite` | Run the project's own unit, integration, mutation, or e2e command and quote its output |
 | `/witness:captcha` | Detect anti-bot; test keys, session, or human gate |
 | `/witness:repro` | Jam URL or narrative. On the machine when computer-control is connected; otherwise Playwright |
 | `/witness:debug` | Write `failure.json` |
 | `/witness:heal` | Change `action.names` only; log in `healing.json` |
-| `/witness:gaps` | Missing steps and transitions |
+| `/witness:gaps` | Missing steps, thin scenarios, and missing test layers |
 | `/witness:report` | `kind` **scenarios** (default), **coverage** (graph gaps), or **har** (network vs oracle) |
-| `/witness:affected` | `git diff` crossed with flow pages |
+| `/witness:affected` | `git diff` crossed with flow pages and the unit or integration tests of that module |
 
 ## Sessions, hops, and accounts
 
@@ -152,7 +156,7 @@ Lightpanda stays off until you accept it. One `lightpanda serve` is one browser,
 
 ## Install
 
-The plugin is this repository. Version `0.1.0` is in [`VERSION`](VERSION). License: [MIT](LICENSE). Privacy: [PRIVACY.md](PRIVACY.md). Contributing: [CONTRIBUTING.md](CONTRIBUTING.md).
+The plugin is this repository. Version `0.2.0` is in [`VERSION`](VERSION). License: [MIT](LICENSE). Privacy: [PRIVACY.md](PRIVACY.md). Contributing: [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ### Cursor
 

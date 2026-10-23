@@ -1,6 +1,6 @@
 {
   "name": "witness",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "See it. Test it. Prove it. Records only observed steps, documents them in Gherkin, and proves them with Playwright MCP.",
   "author": {
     "name": "Gustavo Franco",

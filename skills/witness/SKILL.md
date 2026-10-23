@@ -5,9 +5,10 @@ description: Witness QA agent hub. Flow JSON stores locators and oracles. The .f
 
 <skill name="witness">
   <tagline>See it. Test it. Prove it.</tagline>
-  <purpose>Route user intent to specialized witness-* skills and enforce the JSON contract.</purpose>
+  <purpose>Read the context, route the intent, and enforce the JSON contract. Do not interview before acting.</purpose>
   <read>
     <ref path="references/docs.md">Official documentation catalog; resolve doc-ref ids to href before tools and flags.</ref>
+    <ref path="references/discovery.md">Read the project and act before asking.</ref>
     <ref path="references/setup.md"/>
     <ref path="references/how.md"/>
     <ref path="references/gherkin.md"/>
@@ -20,12 +21,13 @@ description: Witness QA agent hub. Flow JSON stores locators and oracles. The .f
     <ref path="references/har.md"/>
   </read>
   <commands>
-    <command skill="witness-init">Bootstrap and MCP interview</command>
+    <command skill="witness-init">Discover the repo and write witness.config.json. Ask only on a conflict.</command>
     <command skill="witness-explore">Record flow JSON and the matching detailed .feature</command>
     <command skill="witness-map">Summarize graph and scenario When lines</command>
     <command skill="witness-spec">Write .feature with one When/Then per observed step</command>
     <command skill="witness-mission">Business goal to flow and optional feature</command>
     <command skill="witness-run">Execute steps in order</command>
+    <command skill="witness-suite">Run the project's unit, integration, mutation, or e2e command</command>
     <command skill="witness-captcha">Detect and resolve anti-bot gate</command>
     <command skill="witness-debug">Write failure.json</command>
     <command skill="witness-heal">Heal action.names only</command>
@@ -39,8 +41,10 @@ description: Witness QA agent hub. Flow JSON stores locators and oracles. The .f
     <file path=".witness/graph/flows/{id}.json">pages, locators, expect, oracle</file>
     <file path="features/{id}.feature">exact journey, one When per step</file>
     <file path=".witness/runs/{id}/result.json">evidence required on pass</file>
+    <file path=".witness/runs/{id}/suite.json">runner excerpt required on suite pass</file>
   </contract>
   <rules>
+    <rule id="discover-first">Read discovery.md and act on the repo, the diff, and connected tools. Ask only when two sources disagree, a production write is required, or a tool must be installed.</rule>
     <rule id="semantic-first">ARIA role and accessible name, then stable attrs, then structure, vision last.</rule>
     <rule id="readonly">On readonly production, do not purchase, delete, or publish.</rule>
     <rule id="no-secrets">Never write secrets into flow JSON or .feature files.</rule>

@@ -7,6 +7,7 @@ description: Explore URL with Playwright MCP, record flow JSON, and write the ma
   <purpose>Observe the app, write or update .witness/graph/flows/{id}.json, then write the exact .feature in the same session. One When per observed step. If the user does not want a durable flow and computer-control is connected, offer a machine proof instead of Playwright.</purpose>
   <read>
     <ref path="../witness/references/docs.md"/>
+    <ref path="../witness/references/discovery.md"/>
     <ref path="../witness/references/how.md"/>
     <ref path="../witness/references/gherkin.md"/>
     <ref path="../witness-spec/SKILL.md"/>
@@ -25,7 +26,7 @@ description: Explore URL with Playwright MCP, record flow JSON, and write the ma
   </read>
   <when>User provides URL or default baseUrl from witness.config.json environments.</when>
   <inputs>
-    <input name="url">User URL or environments.{default}.baseUrl</input>
+    <input name="url">User URL, else the baseUrl from discovery.md. Ask only when two hosts disagree.</input>
     <input name="flowId">Optional; derive from journey if omitted</input>
   </inputs>
   <steps>

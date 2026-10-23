@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "witness.run.suite",
+  "type": "object",
+  "required": ["runId", "layer", "status"],
+  "properties": {
+    "runId": { "type": "string" },
+    "layer": { "enum": ["unit", "integration", "mutation", "e2e"] },
+    "command": { "type": ["string", "null"] },
+    "exitCode": { "type": ["integer", "null"] },
+    "status": { "enum": ["pass", "fail", "absent"] },
+    "evidence": { "type": "string" },
+    "mutation": {
+      "type": "object",
+      "properties": {
+        "killed": { "type": "integer", "minimum": 0 },
+        "survived": { "type": "integer", "minimum": 0 },
+        "timeout": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": { "status": { "enum": ["pass", "fail"] } },
+        "required": ["status"]
+      },
+      "then": {
+        "required": ["command", "exitCode", "evidence"],
+        "properties": {
+          "command": { "type": "string", "minLength": 1 },
+          "exitCode": { "type": "integer" },
+          "evidence": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "status": { "const": "pass" } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": { "exitCode": { "const": 0 } }
+      }
+    },
+    {
+      "if": {
+        "properties": { "status": { "const": "absent" } },
+        "required": ["status"]
+      },
+      "then": {
+        "required": ["evidence"],
+        "properties": {
+          "command": { "type": "null" },
+          "evidence": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  ]
+}

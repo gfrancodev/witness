@@ -167,11 +167,29 @@
     "testing": {
       "type": "object",
       "properties": {
-        "unitRunner": { "type": ["string", "null"] }
-      }
+        "unitRunner": { "type": ["string", "null"] },
+        "layers": {
+          "type": "object",
+          "properties": {
+            "unit": { "$ref": "#/$defs/testLayer" },
+            "integration": { "$ref": "#/$defs/testLayer" },
+            "mutation": { "$ref": "#/$defs/testLayer" },
+            "e2e": { "$ref": "#/$defs/testLayer" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
     }
   },
   "$defs": {
+    "testLayer": {
+      "type": "object",
+      "properties": {
+        "command": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
     "sessionSite": {
       "type": "object",
       "required": ["id", "origins"],
